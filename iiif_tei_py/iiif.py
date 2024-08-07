@@ -44,7 +44,7 @@ class IIIFClient:
         tmp_img_path = self._download_image(url, tmp_dir)
 
         if tmp_img_path is not None:
-            self._create_manifest3_local_by_gocr(tmp_img_path, cred_file_path, output_iiif_manifest_file_path, debug=debug)
+            self.create_manifest3_local_by_gocr(tmp_img_path, cred_file_path, output_iiif_manifest_file_path, debug=debug)
 
     def _download_image(self, url: str, tmp_dir: str) -> str:
         """
@@ -71,17 +71,17 @@ class IIIFClient:
                 return None
         return tmp_img_path
     
-    def _create_manifest3_local_by_gocr(self, tmp_img_path: str, api_key: str, output_path: str, debug=False) -> None:
+    def create_manifest3_local_by_gocr(self, tmp_img_path: str, cred_file_path: str, output_iiif_manifest_file_path: str, debug=False) -> None:
         """
         ローカルに保存された画像からGOCR APIを使用してManifest3ファイルを作成する。
         """
         img_width, img_height = self.get_image_dimensions(tmp_img_path)
-        json_data = self.perform_ocr(tmp_img_path, api_key)
+        json_data = self.perform_ocr(tmp_img_path, cred_file_path)
         if debug:
             print(json.dumps(json_data, indent=4, ensure_ascii=False))
         manifest3 = self.create_manifest3_data(json_data, img_width, img_height)
-        self.write_manifest3_file(manifest3, output_path)
-        self.copy_image_to_output(tmp_img_path, output_path)
+        self.write_manifest3_file(manifest3, output_iiif_manifest_file_path)
+        self.copy_image_to_output(tmp_img_path, output_iiif_manifest_file_path)
 
     def get_image_dimensions(self, image_path: str) -> tuple:
         """
