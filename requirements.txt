@@ -1,0 +1,7 @@
+nbdev
+requests
+google-cloud-vision
+Pillow
+bs4
+lxml
+python-dotenv

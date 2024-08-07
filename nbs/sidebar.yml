@@ -1,0 +1,9 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_iiif.ipynb
+      - 01_tei.ipynb
+      - section: tmp
+        contents: []
+        href: tmp/index.html

@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "iiif_tei_py"
+  site-url: "https://nakamura196.github.io/iiif_tei_py"
+  description: ""
+  repo-branch: main
+  repo-url: "https://github.com/nakamura196/iiif_tei_py"
