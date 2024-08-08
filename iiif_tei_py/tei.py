@@ -62,36 +62,38 @@ class TEIClient:
             str: 初期のXMLテンプレート
         """
 
+        title = manifest["label"]["none"][0] if "none" in manifest["label"] else "Example"
 
         graphic_url = manifest['items'][0]["items"][0]["items"][0]['body']['id']
         return f'''<?xml version="1.0" encoding="UTF-8"?>
-            <TEI xmlns="http://www.tei-c.org/ns/1.0">
-                <teiHeader>
-                    <fileDesc>
-                        <titleStmt>
-                            <title>Example</title>
-                        </titleStmt>
-                        <publicationStmt>
-                            <p>Example</p>
-                        </publicationStmt>
-                        <sourceDesc>
-                            <p>Example</p>
-                        </sourceDesc>
-                    </fileDesc>
-                    <profileDesc>
-                        <creation>
-                            <listChange>
-                                <change></change>
-                            </listChange>
-                        </creation>
-                    </profileDesc>
-                </teiHeader>
-                <facsimile>
-                    <surface>
-                        <graphic url="{graphic_url}"></graphic>
-                    </surface>
-                </facsimile>    
-            </TEI>'''
+<?xml-model href="https://tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+    <teiHeader>
+        <fileDesc>
+            <titleStmt>
+                <title>{title}</title>
+            </titleStmt>
+            <publicationStmt>
+                <p>Example</p>
+            </publicationStmt>
+            <sourceDesc>
+                <p>Example</p>
+            </sourceDesc>
+        </fileDesc>
+        <profileDesc>
+            <creation>
+                <listChange>
+                    <change></change>
+                </listChange>
+            </creation>
+        </profileDesc>
+    </teiHeader>
+    <facsimile>
+        <surface>
+            <graphic url="{graphic_url}"></graphic>
+        </surface>
+    </facsimile>    
+</TEI>'''
     
     def _append_zones_to_xml(self, soup: BeautifulSoup, annotations: list) -> None:
         """
