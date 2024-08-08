@@ -1,0 +1,52 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "iiif_tei_py",
+    "section": "",
+    "text": "Creating TEI/XML with results from OCR using Google Cloud Vision API",
+    "crumbs": [
+      "iiif_tei_py"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "iiif_tei_py",
+    "section": "Install",
+    "text": "Install\npip install https://github.com/nakamura196/iiif_tei_py",
+    "crumbs": [
+      "iiif_tei_py"
+    ]
+  },
+  {
+    "objectID": "index.html#basic-usage",
+    "href": "index.html#basic-usage",
+    "title": "iiif_tei_py",
+    "section": "Basic usage",
+    "text": "Basic usage\n\nPrepare .env file\nGOOGLE_APPLICATION_CREDENTIALS=your-google-credentials.json\n\n\nPrepare Google Cloud Vision API credentials\n\nfrom iiif_tei_py.core import CoreClient\ncred_path = CoreClient.load_env()\n\n\n\nMain\n\nurl = \"https://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png\"\noutput_tei_xml_file_path = \"./tmp/01/output.xml\"\nCoreClient.create_tei_xml_with_gocr(url, output_tei_xml_file_path, cred_path, title=\"Sample\")\n\nI0000 00:00:1723108517.494375 11044252 check_gcp_environment_no_op.cc:29] ALTS: Platforms other than Linux and Windows are not supported",
+    "crumbs": [
+      "iiif_tei_py"
+    ]
+  },
+  {
+    "objectID": "index.html#advanced-usage",
+    "href": "index.html#advanced-usage",
+    "title": "iiif_tei_py",
+    "section": "Advanced usage",
+    "text": "Advanced usage\n\nOCR with Google Cloud Vision API\n\nURL\n\nfrom iiif_tei_py.core import IIIFClient\niiif = IIIFClient(cred_path)\niiif_manifest_file_path = \"./tmp/02/output.json\"\niiif.create_manifest3_by_gocr(url, iiif_manifest_file_path, tmp_dir=\"./tmp\", title=\"Sample\")\n\nI0000 00:00:1723108518.636803 11044252 check_gcp_environment_no_op.cc:29] ALTS: Platforms other than Linux and Windows are not supported\n\n\n\n\nLocal file\n\niiif_manifest_file_path_local = \"./tmp/03/output.json\"\ninput_image_file_path = \"./tmp/02/images/demo.jpg\"\niiif.create_manifest3_local_by_gocr(input_image_file_path, iiif_manifest_file_path_local, title=\"Sample\")\n\nI0000 00:00:1723108519.684659 11044252 check_gcp_environment_no_op.cc:29] ALTS: Platforms other than Linux and Windows are not supported\n\n\n\n\n\nConvert IIIF manifest to TEI/XML\n\nfrom iiif_tei_py.core import TEIClient\nteiClient = TEIClient()\noutput_tei_xml_file_path = \"./tmp/04/output.xml\"\nteiClient.convert_manifest3_annotations_to_zones(iiif_manifest_file_path, output_tei_xml_file_path)",
+    "crumbs": [
+      "iiif_tei_py"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "core",
+    "section": "",
+    "text": "source\n\nIIIFClient\n\n IIIFClient (cred_file_path:str, id_prefix:str=None)\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nTEIClient\n\n TEIClient ()\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nCoreClient\n\n CoreClient ()\n\nInitialize self. See help(type(self)) for accurate signature.\n\nsource\n\n\nCoreClient.load_env\n\n CoreClient.load_env ()\n\n環境変数を読み込む。\n\nsource\n\n\nIIIFClient.create_manifest3_by_gocr\n\n IIIFClient.create_manifest3_by_gocr (url:str,\n                                      output_iiif_manifest_file_path:str,\n                                      tmp_dir:str='./tmp', debug=False,\n                                      title=None)\n\nURLから画像をダウンロードし、GOCR APIを使用してManifest3ファイルを作成する。\n\n\n\n\n\n\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nurl\nstr\n\n画像のURL\n\n\noutput_iiif_manifest_file_path\nstr\n\n出力するIIIFマニフェストファイルのパス\n\n\ntmp_dir\nstr\n./tmp\n一時ディレクトリのパス\n\n\ndebug\nbool\nFalse\nデバッグモードの有無\n\n\ntitle\nNoneType\nNone\nマニフェストのタイトル\n\n\nReturns\nNone\n\n\n\n\n\n\nsource\n\n\nTEIClient.convert_manifest3_annotations_to_zones\n\n TEIClient.convert_manifest3_annotations_to_zones\n                                                   (input_iiif_manifest_fi\n                                                   le_path:str, output_tei\n                                                   _xml_file_path:str)\n\n*ManifestファイルをTEIのXML形式に変換するメソッド\nArgs: input_iiif_manifest_file_path (str): 入力となるManifestファイルのパス output_tei_xml_file_path (str): 出力となるTEIのXMLファイルのパス\nReturns: None*\n\nsource\n\n\nCoreClient.create_tei_xml_with_gocr\n\n CoreClient.create_tei_xml_with_gocr (url:str,\n                                      output_tei_xml_file_path:str,\n                                      cred_file_path:str,\n                                      tmp_dir:str='./tmp', debug=False,\n                                      title:str=None)\n\nURLから画像をダウンロードし、GOCR APIを使用してTEIのXMLファイルを作成する。\n\n\n\n\nType\nDefault\nDetails\n\n\n\n\nurl\nstr\n\n画像のURL\n\n\noutput_tei_xml_file_path\nstr\n\n出力するTEIのXMLファイルのパス\n\n\ncred_file_path\nstr\n\nGOCR APIの認証情報ファイルのパス\n\n\ntmp_dir\nstr\n./tmp\n一時ディレクトリのパス\n\n\ndebug\nbool\nFalse\nデバッグモードの有無\n\n\ntitle\nstr\nNone\nマニフェストのタイトル\n\n\nReturns\nNone",
+    "crumbs": [
+      "core"
+    ]
+  }
+]
