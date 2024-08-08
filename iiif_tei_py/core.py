@@ -50,10 +50,6 @@ class IIIFClient:
         -------
         None
         """
-
-        # self.url = url
-        # self.title = title
-
         tmp_img_path = self._download_image(url, tmp_dir)
 
         if tmp_img_path is not None:
@@ -69,7 +65,6 @@ class IIIFClient:
             try:
                 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
                 response = requests.get(url, headers=headers)
-                # response = requests.get(url)
                 response.raise_for_status()  # ステータスコードが200番台でない場合にエラーを発生させる
                 with open(tmp_img_path, 'wb') as f:
                     f.write(response.content)
@@ -110,7 +105,7 @@ class IIIFClient:
         self.write_manifest3_file()
         self.copy_image_to_output()
 
-    def get_image_dimensions(self) -> tuple: # , image_path: str
+    def get_image_dimensions(self) -> tuple:
         """
         画像の寸法を取得する。
         """
@@ -118,10 +113,9 @@ class IIIFClient:
         image_path = self.input_image_file_path
 
         with Image.open(image_path) as im:
-            # return im.size
             self.img_width, self.img_height = im.size
         
-    def perform_ocr(self) -> dict: # , image_path: str
+    def perform_ocr(self) -> dict:
         """
         Google Cloud Vision APIを使用してOCRを実行し、結果をJSONとして返す。
         """
@@ -133,10 +127,6 @@ class IIIFClient:
         image = vision.Image(content=content)
         response = client.text_detection(image=image)
         json_str = AnnotateImageResponse.to_json(response)
-        # return json.loads(json_str)
-
-        # self.json_data = json.loads(json_str)
-
         self.ocr_result_json = json.loads(json_str)
     
     def create_manifest3_data(self) -> dict:
@@ -405,9 +395,12 @@ class TEIClient:
         """
         整形したXMLをファイルに書き出す
 
+        Args:
+            soup (BeautifulSoup): BeautifulSoupオブジェクト
+            opath (str): 出力ファイルのパス
 
-
-        
+        Returns:
+            None
         """
 
         formatted_str = self._format_xml_minidom(str(soup))
